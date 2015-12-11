@@ -16,14 +16,14 @@
  */
 package org.apache.stanbol.client.enhancer.model;
 
-import java.util.Collection;
-
 import com.google.common.collect.Sets;
 import com.hp.hpl.jena.rdf.model.Property;
 import com.hp.hpl.jena.rdf.model.Resource;
 import com.hp.hpl.jena.rdf.model.Statement;
 import com.hp.hpl.jena.rdf.model.StmtIterator;
 import com.hp.hpl.jena.vocabulary.DCTerms;
+
+import java.util.Collection;
 
 /**
  * Represents an enhancement in the FISE ontology
@@ -132,6 +132,16 @@ public abstract class Enhancement
                 result.add(next.getObject().asResource().getURI());
     	}
     	return result;
+    }
+
+    public Collection<String> getProperties(){
+        Collection<String> result = Sets.newHashSet();
+        StmtIterator iterator = this.resource.listProperties();
+        while(iterator.hasNext()){
+            Statement next = iterator.next();
+            result.add(next.getPredicate().getURI());
+        }
+        return result;
     }
 
     /* (non-Javadoc)
